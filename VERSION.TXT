@@ -1,0 +1,1328 @@
+Project name: Tree Analyser
+Program name: Tree Analyser
+Program language: Microsoft Visual C++.Net 2003 (Version 7.1)
+Location: D:\SoftWareProjects\Tree Analyser\Tree Analyser\Tree Analyser.sln
+Birth date: 10 June 2003
+Authors: Jessada PHATTARALERPHONG, Hervé SINOQUET
+Company/Institute:	U.M.R. PIAF. Institut National de la Recharche Agronomique (INRA), Site de Cruël, Clearmont-Ferrand, France
+					Kasetsart University, Bangkok, Thailand.
+Objective of program: 
+	1.Using images of isolated tree to estimate geometrical parameters
+	2.Output of reconstruction data ready for RATP model.
+
+Version: 1.0 (2003 = development of algorithms)
+1. Fix size dialog base program
+2. Single working project which can save and reload. Each project consist of  
+	- image list and its parameters add by user
+	- setting option for estimating process
+3. Image list dispaly in tree veiw control. 
+4. Support only black and white images
+5. User can choose to use which image for estimation and model
+6. When user click on image list, the program display the picture and its parameter
+7. User can select command to estimate geometrical parameters or run model form menu
+8. Multithread processing
+9. Output
+	- tree height
+	- tree volume
+	- total leaf area
+	- 3D spatial distribution of leaf area density
+	- mean leaf angle
+	- reconstructed voxels ready for RATP
+
+
+Version 2.0 (early 2005=enhance of interface)
+1. Sizable dialog and controls
+2. Tools bar and status bar support
+3. picture zooming and pixel editing
+4. image registering
+5. Binary file format
+6. Unicode support
+
+
+
+Version 3.0 (2007=Enabled color image)
+1. support true color BMP or JPG (or others formats)
+2. automatic separate background and tree
+3. support running model RATP
+4. online help support
+
+
+Version 4.0 (2009=enhance of 3D graphical output)
+1. 3D view of reconstructed voxels
+2. graphical output
+	- profile of leaf area density
+	- distribution of gap fraction
+	- gap size distribution
+
+Version 5.0 (201x=virtual tree reconstruction, working with Christophe GODIN,Pump,.....)
+1. reconstruction of virtual tree with branches and leaves
+2. leaf and branch object recognition algorithms
+
+
+Version 6.0 (201x=orchard and forest simulation)
+1. 3D graphical view of virtual orchard or forest
+2. photosynthesis and light interception simulation of the orchard or forest
+
+
+TA version 1 Technical note
+On WindowsXP:
+1. Tree Analyser can hold the voxels up to about 19 milion.
+2. Memory requirement depend on number of voxels.
+System Memory	Maximum voxels recommended
+	128				1,500,000 
+	256				3,500,000 
+	512				7,500,000 
+	1024			15,000,000 
+
+
+************************************************************************************************
+****************************** Working Detail **************************************************
+************************************************************************************************
+10/6/03
+1. Create program
+2. Add menu
+3. Add process on menu Add Image
+4. design dialgo of adding image
+5. Add class CEachImage to hold data for each image
+6. Add class CImagePool to with all image in the project
+
+11/6/03
+1. add process call dialog for add image
+2. in dlgADD add function to browse bmp file.
+3. add function to enable and disable all item in dialog
+4. create Pointer of ImagePool1 from CImagePool in Tree AnalyserDlg
+5. create pointer of workingImage from CEachImage in Tree AnalyserDlg
+6. add function DisplayImageInformation() in CEachImage class
+7. add method to check data after user click on add image dialog
+8. add method to put picture to ImagePool
+9. add picture name to tree control
+
+12/6/03
+1. finish save/open project
+2. get message when user click on picture name
+3. add feature to save/open project
+4. disabled/enabled save menu
+
+13/6/03
+1. save pixel value of selected image
+
+14/6/03
+1. Display select picture
+2. resize tree control
+
+15/6/03
+1. adjust image display size
+2. clear old image before draw new image
+3. add edit box name IDC_EDIT_OUTPUT as the output screen
+4. clear old image when new project
+5. add variable ActivePictureName to Tree AnalyserDlg
+6. change the way to save file by save it as text file (solve for bug of open and save file with CAchive)
+7. add working directory variable name=CurrentPath
+8. add function UpdatePicture();
+
+16/6/03
+1. add function ValidateImage(bool option) for check duplicate file name and picture name
+2. check if already have same name in the list when add image
+3. check if current image already add in the pool
+
+17/6/03
+1. set initial size of the program =640x480
+2. set size of controls on start up
+3. add UpdatePicture() if user cancel add image to reflesh picture to avoid bug of display picture
+4. display properties of selected picture
+
+18/6/03
+1. edit picture information
+2. call function UpdatePicture() in WM_Paint
+3. check if file change before open or new project;
+4. add menu delete image
+5. add function to delete image from project
+6. after new project then clear display properties
+7. add menu and dialog for program setting
+
+20/6/03
+1. create/read and write INI file
+2. List of most recently used file
+3. debug MRL sort order
+4. debug application title when open with recently used file list
+5. asking for save when exit
+6. program setting
+
+21/6/03
+1. if there are some problem on open image file then remove it from the list.
+2. debug save file fail and make image file damage cause by open file from list
+3. set flagChange=1 after delete picture from project
+4. Prompt output of pixel as picture name + "_pixel"
+5. add vctTreeItem to hold image list
+6. add function GetTreeID(HTREEITEM *item)
+
+22/6/03
+1. add function UpdateCheckItem() to update check item before save file
+2. save check state for each picture
+
+23/6/03
+1. Add function AddDisplayText() to display given text on the output box
+
+29/6/03
+1. disable pressing enter to exit application (set nothing to OnOK())
+
+30/6/03
+1. add menu Estimate Dimension
+2. Add function =>void CTreeAnalyserDlg::OnProjectEstimatetreedimension()
+3. sucess find pixel top,bottom,left,right
+
+1/7/03
+1. estimate tree dimension only checked image
+2. add menu "Clear Output"
+3. finish estimate tree dimension.
+4. debug of display focal length.
+5. debug clear output=>clear memory of output
+
+2/7/03
+1. correct calculation of angle for height and diameter
+
+3/7/03
+1. correct effect of object distance for calculation of tree diameter
+
+5/7/03
+1. ask saving change before close window
+2. finish calculation of vegetation height
+3. add menu "Reconstruct Volume"
+4. add setting for the project (move form file setting)
+
+
+6/7/03
+1. add class =>cVirtualPlant,voxel,leaf,cPoint,cVGSline
+2. add variables m_cellSize_dx,m_cellSize_dy,m_cellSize_dz to CImagePool
+3. move initialize of pImagepool, pWorkImage and vp1 to OnInitDialog()
+4. save setting of cell size in data file
+5. restore setting of cell size from data file
+6. display message picture name if duplicate file was found
+7. disable button OK in DlgADD when start
+8. add function CreateVirtualPlant()
+9. add function RayInterSect(cVirtualPlant *inputPlant,CEachImage *inputImage)
+10. include "D:\C++Source\Myfunction\MyFunctions.h" in TreeAnalyserDlg.cpp
+
+8/7/03
+1. calcualte initial variables for creation of virtual plant
+2. add status bar and functions
+
+9/7/03
+1. use "\r\n" to add new line in edit box
+2. add function SetRedraw(TRUE/FALSE) and UpdateWindow() to control display of edit box
+3. add class CDirection to hold data of each ray direction
+4. add variable for number pixel x and y that will use to evaluate ray direction
+5. in add dialog set Fuji FinePix1400 to default
+6. find max min value form estimation of dimension
+7. add virtual cells
+8. display view angle in add dialog
+
+10/7/03
+1. debug translation of y on the exporting of box to VegeSTAR file
+2. change function name CalculDirection to CalculDirections
+3. create function CalculDirection(cPoint *point1, cPoint *point2)
+4. set flagChange when setting has been changed.
+5. add function to default button in setting dialog
+
+
+11/7/03
+1. move function about to calculate distance in pixel and metre to class CEachImage
+2. add functions to display status bar and output to class CVirtualPlant
+3. CalculPointInSpace(int pixelx, int pixely)
+4. add function cPoint CEachImage::CalculUnitDirection(double pixelx, double pixely)
+5. calcul middle pixel for each direction
+6. save percent enlargement in data file
+7. save raypx,raypy in data file
+8. save camera name in data file
+9. save if output box and skeleton
+10. find pixel for each grid
+11. move string of version name and last update to string table
+12. double click on the picture show edit parameters
+13. calculate camera location (x,y,z) for each picture
+14. delete function CTreeAnalyserDlg::CalculDirection(cPoint *point1, cPoint *point2)
+15. calculate direction for each grid
+
+12/7/03
+1. test ray-box but found bug abour camera elevation and rotation
+2. debug calculation on total_nz
+3. debug calculation of xmin and ymin for virtual plant
+
+13/7/03
+1. debug display percent in statusbar
+2. improve algorithm of packing VegeSTAR data
+
+14/7/03
+1. debug ray-box algorithm=>switching t1 and t2
+2. debug ray-box algorithm=>inplane y use dz
+3. enable input of azimuth rotation and direction -360 to 360
+4. enable input of elevatin -90 to 90 deg
+5. finish ray-cell intersection algorithm
+6. adjust output display
+7. add combo for selection of direction
+
+15/7/03
+1. disable/enable menu "Analyse all"
+2. adjust display of canopy volume
+
+17/7/03
+1. improve speed of ray-cell intersect funciton using pointer
+2. debug calculation of unit vector
+
+
+18/7/03
+1. add warning message if camera elevation is too high/low;
+2. it is not work only inc<-89.9
+
+21/7/03
+1. finish debug ray-cell intersect for any direction of picture
+2. debug for elevation 90
+3. debug calculation of canopy diameter in high inclination image
+4. automatic change display image during calculation
+
+22/7/03
+1. add receptor size for Casio QV-3500EX
+
+28/7/03
+1. debug of scrolling line in output windows
+2. update display file type in save as dialog
+
+29/7/03
+1. inprove selection display image while processing
+2. add log file for volume reconstruction
+
+30/7/03
+1. modify option of output of volume reconsturction
+2. add options for estimation of leaf area in setting dialog
+
+
+4/8/03
+1. add menu for test picture combination
+2. add dialog for testing picture
+3. add function "void CTreeAnalyserDlg::TestPictureCombination(int picnum)"
+
+25/8/03
+1. improve algorithm of packing VegeSTAR data
+
+30/8/03
+1. add more receptor value
+
+24/9/03
+1. change include <fstream.h> to include <fstream> /51 errors 71 warning
+2. change unsign int nx,ny,nz to int nx, ny, nz /51 errors 8 warning
+3. change unsigned int raypx,raypy to int raypx,raypy  /51 errors 6 warning
+4. change "int i=0;i<leaf_number" to "unsigned int i=0;i<leaf_number" 3 points /51 errors 3 warning
+5. change "int i" to "unsigned int i" for vctTreeItem.size() 2 points /51 errors 1 warning
+6. change "acos(double(-1))" to "acos(double(-1))" 7 point /44 errors 1 warning
+
+25/9/03
+1. debug error writing text file (not finish)
+
+26/9/03
+1. finish debug writing text file because the output location does not exit du to moving program location.
+
+28/9/03
+1. add menu "Color Counting" and add function to menu
+2. add class ColorCount 
+3. finish Color counting function
+4. enable/disable menu for color count
+
+29/9/03
+1. debug if ini not found
+2. debut header of output file from "Color Counting"
+
+2/10/03
+1. add parameter LastDir to keep last used directory (not finish)
+
+7/10/03
+1. add time recording
+2. change exporting of box with red color
+3. debug correction of azimuth
+4. debug due to debug mirror image in POV-Ray
+
+14/10/03
+1. add function calcul basic in class CEachImage
+2. add function to calculate unit direction from 2 point in CEachImage
+3. finish calculation of beam direction using vector
+4. debug read and write ini file
+
+15/10/03
+1. change output name to vol%i_after_picturename
+2. add variable CameraCoordinate in class CEachImage
+3. change function CalculCameraCoordinate() to store in side camera coordinate (give 30% faster)
+4. change loop in ray-cell intersection using vector (no change in speed)
+5. delete cell that keepit==0 and do not compare keepit (little speed improved <5%)
+6. add menu estimate leaf area
+7. do not display message after save
+
+16/10/03
+1. Remember last used directory 
+2. cut off setting working directory
+
+17/10/03
+1. debug not correct reading directory of ini file
+2. debug floating point error of reading data
+3. pass the image that over limit of elevation
+
+
+19/10/03
+1. output last vgx file if output vgx is disable
+2. output time usage for volume reconstruction
+
+24/10/03
+1. do not display message after ok on adding image
+2. debug reading data file
+3. remember last camera not finish
+
+26/10/03
+1. finish remember last used camera
+2. save camera type in data file
+3. ask before delete picture
+4. disable menu estimate leaf area when open new file
+5. reset max min of canopy dimension before estimate was already performed
+6. check flagChange check/uncheck picture before change project file or exit
+7. Display view angle for each image
+
+27/10/03
+1. debug open file error cause form using of pointer "char *ff" but not delete after used
+2. delete pImagePool1 and recreate before new or open project
+3. debug update last used file after open file
+
+28/10/03
+1. debug searching pixel bounding =>add more break
+2. change in ResetKeepit() function make faster
+3. reduce screen wink when chage image by remove function "Invalidate()"
+
+29/10/03
+1. find incomming and outgoing point of bounding box and set limit of cell to test
+2. change the way to delete empty cell strat from the end of the array
+
+30/10/03
+1. add function "DisplayCanopyProperties()"
+2. change name of log file correspend to project name
+3. add canopy height, vegetation height, diameter N-S and diameter E-W to log file
+4. add menu for mark/unmark and togle mark
+5. add Nikon CoolPix885 to camera list
+6. change default to no output box
+
+2/11/03
+1. set default pixel to 3x3
+2. debug write logfile for AnalyseAll
+3. imporve out put display
+
+4/11/03
+1. enable some item in setting dialog about estimation of leaf area
+
+6/11/03
+1. add menu "Save Canopy" and "Open Canopy"
+2. add function to menu "Display Properties"
+3. remove function "CalculPointInSpace"
+
+12/11/03
+1. Correct INRA's name
+2. adjust display canopy properties
+
+13/11/03
+1. add function for save canopy (not finish)
+2. cut out function "OnDblclkTree1"
+3. cut out function "virtual BOOL Create(LPCTSTR lpszClassName,......)"
+4. remove function SetCursor
+
+17/11/03
+1. rearrange setting dialog
+
+21/11/03
+1. finish save canopy
+
+23/11/03
+1. finish open canopy
+
+25/11/03
+1. debug open file by delete pointer ff before the of the function
+
+26/11/03
+1. add function GetCanopyVolume() to VirtualPlant
+2. calcul porosity form intersected volume and canopy volume
+3. add function OnNMDblclkTree1(NMHDR *pNMHDR, LRESULT *pResult)to edit parameters of picture if user dblk on the list.
+
+27/11/03
+1. add function CalculDirections(CEachImage *image,int gx,int gy)
+2. add px and py variable store in each beam direction
+3. finish calculation of gap fraction (moving average)+ output file
+
+28/11/03
+1. enable leaf area estimation
+2. add calculation of mean LAD and VLAD
+3. change function CalculSamplingArea(int ZoneSize)to CalculSectionArea(int ZoneWidth,int px,int py)
+
+30/11/03
+1. finish fixed cube to cell size
+
+2/12/03
+1. Add variable lapx and lapy.
+2. Add m_leaf_distribution to pImagePool1 and Setting dialog
+3. Rearrange setting dialogbox
+
+4/12/03
+1. add variabel gap_average_option
+2. enabled save and open options for leaf area estimation
+
+7/12/03
+1. display interface after select spherical, custom and conical
+
+12/12/03
+
+1. add function to calcul G in imagePool
+
+13/12/03
+1. add menu and function for fractal analysis
+
+16/12/03
+1. add variable "m_mean_leaf_inc" to ImagePool and Setting dialog
+2. add function "GetG_conical" in ImagePool
+3. modify function "CalculDirections(CEachImage *image,int gx,int gy)" to use lapx and lapy as beam spacing
+
+17/12/03
+1. complete calculation of G conical
+2. add function "virtual BOOL OnInitDialog()" to set initial of dialog
+
+18/12/03
+1. modify "CalculDirections(CEachImage *image,int gx,int gy)" to allow calcualtion of gap by fixed or gliding zone
+2. modify enable/disable menu for calcualte leaf area
+
+19/3/03
+1. debug calculation of angle from beam spacing when calculate leaf area
+
+20/12/03
+1. improve speed of resizing canopy by copy it to new array and copy back
+2. using technique in 1 to pack VegeSTAR file
+
+15/1/04
+1. remove process of packing vegeSTAR file to increase speed of computing
+
+16/1/04
+1. debug of remember last used ccd size 
+
+19/1/04
+1. debug browse button invisible after select again custom
+2. add program and version marker at header of data file
+3. add parameter LeafDistributionFile in cImagePool to store the name of leaf distribution file 
+
+20/1/04
+1. finish save and open file with parameter "LeafDistributionFile"
+2. add function "bool ReadLeafDis(CString distribution_file)" in cImagePool for reading of leaf distribution file
+3. debug calculation of G when beam inclination <0
+4. add function "double GetG_custom(double beam_inc)" in cImagePool
+
+21/1/04
+1. improve output display of the estimation of leaf are
+2. debug error open file cause by using pointer to null terminate string using "LPTSTR ff = new TCHAR[ms.GetLength()+1]; _tcscpy(ff, ms);"
+3. debug enabled/disabled menu "Fractal analysis"
+
+22/1/04
+1. log output of leaf area estimation
+2. use function "acell.clear()" to clear memory before compact cells
+2. clear memory of beam directions after use
+
+23/1/03
+1. rearrange output
+2. log output for estimation of tree dimension
+3. calculate mean LAD and variance weighted by beam volume
+4. calcualte maximum of LAD
+
+24/1/04
+1. add display of average max and mean of leaf area.
+
+26/1/04
+1. add display of lacunarity.
+
+27/1/04
+1.calculate mean and variance of LAD weighted by beam volume.
+
+28/1/04
+1. add input dialog box 
+2. add menu "Random leaf in volume"
+3. finished function for random leaves in the volume.
+4. modify input dialog for general perpose.
+
+29/1/04
+1. improved speed of fixed zone calculation of gap by calculate gapfraction for 
+   each zone and store in array then for each direction looking up the gap fraction 
+   in the array
+2. Start to write function to calculate gap fraction for every beam that gap fraction>0
+
+30/1/04
+1. add menu "Estimate leaf area2"
+2. finish writing function to calculate gap fraction for every beam that gap fraction>0
+3. add parameter "minumGap" in Imagepool
+4. add button advance to the setting dialog
+
+31/1/04
+1. debug calculation of intersect volume
+2. calculate limit of minimum gap fraction
+3. change menu Estimate leaf area to use option 2
+4. Add dialog "Advance Option"
+
+1/2/04
+1. move limit elevation to advance option
+2. move beam spacing for volume construction to advance option
+3. move enlarge box to advance option
+
+2/2/04
+1. add option for zero gap management in advance option
+2. add parameter ZeroGapManage and minimumGap to pImagePool
+3. add parameter IfSetMaxLAD and MaxLAD
+4. add option 2 and 3 to the calculation of leaf area
+
+3/2/04
+1. debug calcualtion number of zero gap
+2. add %zero gap and minimum gap to output
+
+4/2/04
+1. automatic adjust zerogap to (1/n)*averageGap where n=total number of pixel per gap (average gap from only non zero direction)
+
+7/2/04
+1. analysis of fractal 2,4,8,16,32,....
+
+10/2/04
+1. add menu "Compute LAD distribution"
+2. Add process to get total leaf area from user for the computation of LAD distribution
+3. add function CalculDirections3 for non-intercepted direction only (not finish)
+
+11/2/04
+1.  edit function cVirtualPlant::CalculMeanLAD() change nx*ny*nz to GetTotalCell().
+2. add process to put mean leaf area to every cell.
+3. add display canopy properties when open the canopy.
+
+17/2/04
+1. output gapfraction,LAD and volume for each beam direction when calcualte leaf area from intercepted direction
+
+19/2/04
+1. Add functuion void cVirtualPlant::ClearIntersectVolume(void)
+2. Add function void cVirtualPlant::ShareLeafToVoxel(double InputArea)
+3. Add function void cVirtualPlant::OutputVerticalLAD(CString fname, double range) not finish
+4. Add process to compute distribution of leaf area (not finish)
+
+20/2/04
+1. continue function OutputVerticalLAD
+2. Add function double cVirtualPlant::GetTotalLeafArea(void)
+3. Add leaf area in canopy file
+4. Move DisplayCanopyProperties from TreeAnalyserDlg to VirtualPlant
+5. Add function double cVirtualPlant::GetTotalLeafArea(void)
+
+22/2/04
+1. Create new class for the work derived from CObject (tThread)
+2. In main class: create a pointer to the thread (CWinThread *pWorkThread;) and set it to NULL when initialize the class
+3. In main class: create a function to create the pointer to the object of work and run its function.
+4. In main class: create a function to create the object of work and its pointer then create the thread and set the value of the pointer to the thread
+5. Add function "static UINT ThreadEstimateDimension( LPVOID pParam );"
+6. Add function "static UINT ThreadVolumeReconstruction( LPVOID pParam );"
+7. Add function "static UINT ThreadEstimateLeafAreaInterceptedDir( LPVOID pParam );"
+8. Add function "static UINT ThreadEstimateLeafAreaTotalDir( LPVOID pParam );"
+9. Add variable WorkIndex in TreeAnalyserDlg
+
+23/2/04
+1. Add function "void CTreeAnalyserDlg::SetWorkingMenu(void)"
+2. Add function "void CTreeAnalyserDlg::DisableAllMenus(void)"
+3. Modify the menu management in each function to use function SetWorkingMenu(void)
+4. Add function "void cVirtualPlant::Reset()"
+5. Add function "static UINT ThreadAnalyseAll( LPVOID pParam );"
+6. Add function "UINT CTreeAnalyserDlg::ThreadWork(LPVOID pParam)"
+7. Delete function for each thread and use only ThreadWork function
+8. Add Function "int CTreeAnalyserDlg::AskForStopThread(void)"
+9. Add Function "void Fractalanalysis();"
+10. Add Function "void CTreeAnalyserDlg::Colorcounting()"
+11. Add Function "void CTreeAnalyserDlg::Savepixelvalue() "
+12. sort function declaration in TreeAnalyserDlg.h
+
+24/2/03
+1. Add controls and variables in about box to display the version and update from string table
+2. modify saving file to save dx,dy and dz as %6.4f
+3. modify setting dialog to allow enter real value for cell size
+4. add function to disable control in Setting and Advance dialog.
+5. Enable to see setting while running work
+
+25/2/04
+1. add clumping options in advance dialog.
+2. add clumping options in ImagePool.
+3. modify function to save and open data with clumping.
+4. add clumping options in setting dialog.
+5. delete some functions and variables that not use in cell and virtual plant to save memory
+6. add limit number of voxel when do the construction of canopy
+
+26/2/04
+1. Edit function AddDisplayText to use function ReplaceSel()
+2. Use CImage to control reading pixel for the function of saving pixel value
+
+27/2/04
+1. Change limit of voxel to 15,000,000
+2. Change version of data file to 1.01 and change function open file to allow oper version 1
+3. Delete function void EstimatedLeafAreaInteceptedDirection() and void EstimatedLeafAreaTotalDirection();
+
+3/3/04
+1. apply CImage to control of reading pixel for estimation of tree dimension and volume reconstruction
+
+5/3/04
+1. Add function "CPlane CEachImage::GetCanopyPlane(void)"
+2. Add function "double CEachImage::GetIntersectRayPlane(int x,int y, cPoint *IntersectedPoint)"
+3. Add function "cPoint CEachImage::GetCameraLocation(void)".
+4. Change calculation of tree height and diameter using vector style.
+5. Build setup program for TA
+
+6/3/04
+1. Do not display message if ini not found, bypass directly to default
+2. Change default directory of setup to Tree Analyser
+3. Add process to get argument on initialize
+4. Separate canopy plane for tree height and diameter
+5. if picture not found in destination try current path
+5. if leaf distribution file not found in destination try current path
+
+9/3/04
+1. Use the same vertical plane to calculate tree height and diameter.
+2. Correct diameter cause by different height of left and right pixel
+
+13/3/04
+1. Remove unused images.
+2. Show log file name on output window.
+3. Play sound when theread is finish.
+
+14/3/4
+1. enable tree to show selection if not focus.
+2. set limit text output to maximum.
+
+19/3/04
+1. add variable m_mean_leaf_area to pImagePool
+2. edit open and save file to version 1.02
+3. prepare moving of some parameter to advance option
+
+22/3/04
+1. move zoning and beam spacing to advance.
+2. Add variable gap_option. 
+3. set default button.
+
+16/4/04
+1. Add function to calculate minimum zone size.
+2. Change file to version 1.03=>add variable "m_inversion_method"
+3. Add option to select inversion method in dialog setting
+
+20/4/04
+1. Debug DlgAdvance the ID "IDC_RADIO_AUTOCLUMP" was lost.
+
+22/4/04
+1. debug CalculDirection() in calculation of current pixel for getpixel function.
+
+23/4/04
+1. change image control in CalcuDirection2 to use CImage
+
+25/4/04
+1. add function CalculDirection4 for Binomial model
+
+3/5/04
+1. Add function=>double CEachImage::CalculGap(double px, double py, int gx, int gy, int GapOption) 
+
+4/5/04
+1. delete menu Estimate leaf area for intercepted directions
+2. debug calculation leaf area using positive binomial model 
+3. change function CImagePool::CalculG(double beam_inc, double l) to CImagePool::CalculG(double beam_inc)
+4. change function CImagePool::GetG_custom(double beam_inc, double l) to CImagePool::GetG_custom(double beam_inc)
+5. Add function "double CImagePool::CalculDotproduct(cPoint vctA, cPoint vctB)"
+6. delete function CalculMinimumZoneSize from CEachImage
+
+5/5/04
+1. Add positive binomial model
+2. Check if log file is opening in estimation of leaf area
+
+6/5/04
+1. debug non-standard style in calculdirection4
+
+7/5/04
+1. debug calculation of G error from mistake of calcualtion of leaf normal direction
+
+8/5/04
+1. change gpy with gpx in advanced dialog
+2. change beer to use calcualdirection4
+
+11/5/04
+1. Do not set gap fraction =0 in CalculDirection4
+2. Calcul and display gap information after CalculDirection4
+3. Adjust display and file output of leaf area estimation
+4. Output of zero-gap leaf area
+5. Add operator * to class cPoint
+6. Delete function "double CImagePool::CalculDotproduct(cPoint vctA, cPoint vctB)"
+
+12/5/04
+1. Adjust display header of the estimation of leaf area
+
+13/5/04
+1. detach image after use in CalculDirection4
+2. enabled autodetect zoning size
+3. disable clumping option
+4. disable beam spacing for leaf area
+5. add SD for mean
+6. Debug reading leaf angle distribution file when file not found or error
+
+14/5/04
+1. debug calculation SD and STDERR 
+2. If read leaf distribution error then stop estimation of leaf area.
+3. Read leaf angle distribution one time before estimation process (reduce memory leak)
+4. Clear vctLeafIncDis before reread.
+5. Disable/enabled edit box of mean leaf area during selection of inversion method
+
+17/5/04
+1. Rearrange output of estimation of tree dimension
+2. Debug display of minimum zone size 
+
+19/5/04
+1. Add Class VideoCapture
+2. Add Function to show image
+
+21/5/04
+1. Delete class VideoCapture
+2. Add class CaptureDlg
+
+23/5/04
+1. Output full gap and zero gap volume
+
+24/5/04
+1. output SD for tree dimension
+2. debug calculation sd and standard error of mean
+3. start video on open dialog capture
+4. stop image then save 
+
+25/5/04
+1. add erectrophile distribution (not finish)
+
+26/5/04
+1. Finish erectrophile, extremophile, plagiophile and planophile leaf angle distribution
+
+27/5/04
+1. set default leaf angle distribution to planophile
+
+28/5/04
+1. add CoolPix4500
+2. Set maxLAD as defualt=30
+
+1/6/04
+1. change location of leaf angle distribution if default not found
+
+2/6/04
+1. remove nx ny and nz out of cell
+2. add maximumLeafArea to cell
+
+4/6/04
+1. Add function CalculP0(cPoint *ray_origin,cPoint *ray_direction) to cVirtualPlant //not finish
+2. Add void CTreeAnalyserDlg::SetVoxelMaximumLAD(void)
+3. Set EstimateLeafArea no parameter
+4. Add void CalculDirections5(CEachImage *image,int gx,int gy);
+5. Debug resize the virtual canopy when number of cell =0;
+6. Debug ordering of voxels when open and save canopy file.
+
+14/6/04
+1. compare canopy (not finish)
+
+15/6/04
+1. Add void CTreeAnalyserDlg::Opencanopy(CString fname,cVirtualPlant *vp1)
+2. Add void CTreeAnalyserDlg::SaveCanopy(CString filename,cVirtualPlant *vp1)
+3. Compare canopy enabled
+
+17/6/04
+1. Output zero-gap volume and full-gap volume to log file
+
+30/6/04
+1. add ID to voxel
+2. edit save and open canopy
+3. export data for Christophe
+
+7/7/04
+1. modified compare canopy
+2. add class MatchedVoxel to Tree AnalyserDlg.cpp
+3. Add menu "Export VegeSTAR canopy"
+
+11/7/04
+1. finish vertical profile of leaf area. 
+2. Add camera Nikon E4300
+
+14/7/04
+1. start function to calculate variance diagram
+2. add Class CVarDiagram
+3. Add function double CVarDiagram::CalculVariance(double lower,double upper, int *n)
+4. Add process to random switching voxels LAD in void CTreeAnalyserDlg::OnTestTest() 
+
+18/7/04
+1. add function void CaculLAD1(void); //share leaf area along the beam
+2. add function void cVirtualPlant::ClearSumsurface(void)
+3. debug computation of vertical profile
+4. add menu export RATP voxels
+5. add check box for LAD distribution in setting dialog 
+6. add function void cVirtualPlant::SaveGridParameters(CString filename)
+7. add function void cVirtualPlant::ExportRATPvoxel(CString filename)
+8. adjust displaying menus
+
+19/7/04
+1. correct random switching LAD in cVirtualPlant
+2. add bool ifCalculVprofile in ImagePool
+3. modify project file to 1.04
+4. delete menu compute LAD distribution
+
+21/7/04
+1. add function to export csv file for Christophe in Test1()
+
+22/7/04
+1. debug output character when run on windows French version
+
+
+26/7/04
+1. add function void CTreeAnalyserDlg::OnImageCalcualtegapfraction()
+2. add variable last_cam_distance and last_cam_height in TreeAnalyserDlg
+
+27/7/04
+1. debug open file use fget 100 is too short then changed to 256
+2. add class CTA_ini
+3. add function void CTA_ini::Serialize( CArchive& archive )
+4. add function void CTA_ini::ReadIni()
+5. add funciton void CTA_ini::WriteIni()
+
+28/7/04
+1. change the function =>int CTreeAnalyserDlg::CountFractal(CEachImage *image,int gx,int gy) to use CImage
+2. Add menu Solving Equation
+3. Add function void CalculDirections7(CEachImage *image,int gx,int gy);// for solving equation
+4. Add class CEachEquation
+5. Add class CEquationPool
+
+14/8/04
+1. Add FolderDialog.cpp and FolderDialog.h
+2. Add browse output location buttion to Setting Dialog
+3. Add hyperlink to PIAF and KU with class CHyperLink
+
+15/8/04
+1. Add mailto author
+
+19/8/04
+1. Add Cannon PowerShot A75
+
+Version 1.06
+23/8/04
+1. Set default leaf size=20 cm2
+2. Set default inversion method to Beer's
+
+2/9/04
+1. debug CalculDirections when reading pixel
+2. clear warning point
+
+4/9/04
+1. debug display vertical images
+2. use CImage control showing pictrue
+
+5/9/04
+1. do not save vegeSTAR file for last image if VegeSTAR output is not checked
+2. debug show setting dialog during calculation by disable OK button
+3. debug assertion fail when call capture dialog
+
+6/9/04
+1. debug change cell size dy and dz with dx if cube is checked
+
+Version 1.07
+9/9/04
+1. do not save image width and height to data file.
+2. Add function CEachImage::ReadImageDimension(void)
+3. Modify function read data to read image dimension before add to ImagePool 
+
+10/9/04
+1. add function CImagePool::CheckFile(CString filename) to check the file before open.
+2. debug - open file with argurement can not set check to list
+
+14/9/04
+1. debug display output of leaf area estimation on window french edition
+
+Version 1.08
+17/9/04
+1. Debug computation of minimum zone size due to G and projected area
+2. Debug display view angle when change focal length
+
+18/9/04
+1. Add function CalculSamplingArea(CEachImage *image,int pixel_dx,int pixel_dy)
+2. output sampling size and mid_G to log file after estimate leaf area 
+3. debug display focal length in dialog cause by one edit box float above it.
+
+21/9/04
+1. Add Nikon E995
+2. Add Menu display vertical profile of canopy volume
+3. press Esc to stop the thread
+
+22/9/04
+1. debug check cube in setting dialog.
+2. reset default setting
+3. debug calcualtion of sampling area
+4. change function "int CImagePool::CalculMinimumZoneSize(CEachImage *image)" to "double CImagePool::CalculMinimumZoneSize(CEachImage *image)"
+5. add function "int CImagePool::CalculOptimalZoneSize(CEachImage *image)"
+6. adjust display image properties
+7. modify fShowPicture(CString fname) to fShowPicture(CString fname, double *scale_return)
+8. modigy CTreeAnalyserDlg::UpdatePicture() to draw marked point
+
+28/9/04
+1. Use Arc to draw circle instad of Ellipe
+2. change vector<float> to vector<double>
+3. edit cVirtualPlant::GetMinMax(bool max_min, short int xyz) to call CalculBasic before
+
+29/9/04
+1. change m_az to m_bending
+2. Change PutCameraAz to PutCameraBending
+3. Change GetCameraAz to GetCameraBending
+4. add last used camera elevation
+
+Version 1.08a
+4/10/04
+1. do not show image information when add
+2. add image mid point marker
+3. if unable to read leaf distribution file use planofile as default
+
+5/10/04
+1. change center marker color to blue-sky
+
+Version 1.09
+6/10/04
+1. Change optimum zoning size =4x
+2. export canopy and VGX file with adding voxel size as default to name
+3. add animate while searching pixel
+
+7/10/04
+1. save last used parameters to ini file.
+
+8/10/04
+1. add date and time in log file.
+2. delete function CalculDirection2
+
+Version 1.09a
+10/10/04
+1. Clear voxels when open new project
+
+12/10/04
+1. Output label erosion process
+
+13/10/04
+1. Add send to tree_analyser@yahoo.com
+2. output mean leaf size to log file if binomial is selected
+3. output mean leaf angle to log file if conical is selected
+4. output leaf distribution file if custom leaf distribution is selected
+
+version 1.10
+5/11/04
+1. modify compare canopy to output un matched voxels
+2. add OnTestSolvinglinearregression()
+3. Add Solvinglinearregression()
+
+11/11/04
+1. Add ask stop thread for solving linear regression (index=12) before exit
+2. Edit code to find the equations (not finish)
+
+18/11/04
+1. Add menu and functions to compute P0
+
+24/11/04
+1. Include beam that P0=1 in the output for Christophe
+
+2/12/04
+1. adjust size of image properties
+2. add display optimal zone size
+3. export PlantGL file
+
+11/12/04
+1. Enabled calling PlantGL Viewer
+
+4/1/05
+1. Add functionCTreeAnalyserDlg::DrawZone(int px, int py, int gx, int gy)
+2. Add variable CurrentScale
+
+17/1/05
+1. Update calibration value of camera according to paper volume
+
+Version 1.12
+18/1/05
+1. Change layout of menu
+2. Add function CTreeAnalyserDlg::OnImageAddimagetoproject()
+3. delete function CTreeAnalyserDlg::OnProjectAddimage() 
+4. Add functiion CTreeAnalyserDlg::OnViewClearoutput()
+5. Delete function CTreeAnalyserDlg::OnProjectClearoutput()
+
+22/1/05
+1. Clear virtual canopy in memory when new project
+2. Before view by plantGL check if have voxels
+3. Create pen when dialog is constructed.
+4. If custom azimuth is selected edit box should be enabled.
+
+26/1/05
+1. Add CTreeAnalyserDlg::OnHelpTreeanalyserusermanual()
+
+1/2/05
+1 Add function CTreeAnalyserDlg::OnTestMaximumzoning()
+
+8/2/05
+1. export average section of beam for csv file
+2. for csv file export path length (L) instade of L*G as before
+
+9/2/05
+1. include myfunction.h in root directory of project
+
+12/2/05
+1. debug fractal analysis caused by access pixel out of range
+2. debug image properties window does not show information after add image
+3. change wording "cell" to "voxel"
+4. change my mail to agrjes@yahoo.com
+
+14/2/05
+1. Add export P0 for binom
+2. Change structure of csv file for beer (No output G)
+
+16/2/05
+1. debug export equation for beer (forgot *-1)
+2. export equation using 8 digits
+
+4/3/05
+1. Add Dialog for Exporting Beams
+2. Add menu Export beam equations
+
+5/3/05 
+1. Debug calcul vertical profile of leaf area for topmost layer
+
+14/3/05
+1. Remove negative binomial model
+
+17/3/05
+1. Add InitDialog to exporting beam
+
+20/3/05
+1. Add floating error control when compare canopy
+
+21/03/05
+1. Modify function CTreeAnalyserDlg::GetFileName to have option for including extension
+
+Version 1.15
+23/3/05
+1. Finish dialog for export beam
+2. Add function void ExportP0Beer(CString ExportName, BOOL separated)
+3. Add function void ExportP0Binom(CString ExportName, BOOL separated)
+4. Add function void CTreeAnalyserDlg::Exportbeamequations()
+5. Add thread for export beam equation
+
+version 1.16
+30/3/05
+1. debug color counting using CImage getting pixel value instead of old style code
+2. Change menu Analyse All to "Do All Calculation"
+
+11/4/05
+1. Add function CTreeAnalyserDlg::WritePythonCode(CString output_directory, CString filename)
+2. finish export data with python code
+
+version 1.17
+14/4/05
+1. Add submenu "Export equation for Python" in menu Calculation
+
+24/4/05
+1. Enabled save and load camera binary file
+2. Add class CEachCamera and CCameraPool
+
+version 1.18
+30/4/05
+1. Add camera to combo_list
+
+5/5/05
+1. Add function "void CTreeAnalyserDlg::OnTestCheckVersion()"
+
+
+14/5/05
+1. finish function testing read/write binary file
+2. Add read/write binary file to ImagePool
+3. Add display of setting (not finish)
+
+16/5/05
+1. Add function CTreeAnalyserDlg::DisplaySettingProperties()
+
+24/5/05
+1. Removed function CalculDirections3
+2. Removed function CalculDirections(CEachImage *image,int gx,int gy)
+
+25/5/05
+1. Save/Read each image data in new format
+
+29/5/05
+1. Enabled open new format
+2. Removed variable lapx and lapy.
+3. Finish open/save new format
+4. Removed variable iImageCount from ImagePool
+5. Add variable "CString camera_name" to CEachImage
+6. Change variable in CEachImage from m_ccd_size to camera_cal
+7. Add function CString CImagePool::GetOldCameraName(int selected_number)
+8. Removed picture type from CEachImage
+
+31/5/05
+1. Read/Write ini file with CFile
+2. Finish CDlgAdd about cameras
+3. Add more variables in CEachCamera
+4. m_selectedCamera from system
+5. View camera information
+6. Debug Calcul G due to conversion of radian to deg for camera ele (this will effect very little old calculation)
+7. Finish add camera
+
+6/6/05
+1. Debug output estimation of leaf area du to removed lapx and lapy.
+
+8/6/05
+1. debug calculation of gapfraction near border found in CalculDirection4 
+2. Improve drawing zone on screen not larger than picture viewer
+3. debug update value when select camera
+4. debug save changed file if open new file or exit program.
+5. Removed function SaveData in CImagePool
+
+version 1.18e
+9/6/05
+1. debug drawing zone reduce to <50 zones
+
+version 1.19
+10/6/05
+1. For binomial if sampling is too small then use Beer's model for convertsion
+2. reset default value in setting
+
+11/6/05
+1. reset default value of gpx and gpy to 100x100 pixels
+
+version 1.19b
+1. debug calculation zonesize cause by forgot conversion from int to double
+
+
+version 1.19c
+22/6/05
+1. Add function CImagePool::CalculOptimalZonesize(CEachImage *image)
+
+13/7/05
+1. use function ceil in CImagePool::CalculOptimalZoneSize(CEachImage *image)
+
+6/8/05 
+1. debug error header of color counting
+
+7/8/05
+1. Disabled fixed or gliding zone in advanced setting
+
+7/9/05
+1. Add option for select PZA in Advanced dialog. (not finish)
+
+11/10/05
+1. Change all dialog language to Neutral
+2. Add fix_pza variable to dialog setting and advance
+
+version 1.20
+12/10/05 3hrs
+1. Save data file version 1.20 with variable fix_pza 
+2. Enabled calculation of leaf area by fixed PZA
+3. Add option for subdivision of PZA in Advanced Dialog
+
+
+14/10/05
+1. Add variables is_divide_pza, division_horizontal and division_vertical in
+	pImagePool, dialog setting and dialog advanced
+2. Link above variable to related dialogs
+
+16/10/05
+1. Save/open variables is_divide_pza, division_horizontal and division_vertical 
+2. Enabled/disabled V/H edit boxes when click to select subdivision
+
+22/10/05
+1. Removed function "CTreeAnalyserDlg::CalculDirections5"
+2. Removed function "CTreeAnalyserDlg::SetVoxelMaximumLAD" (function that call 1)
+3. Remuved function "CTreeAnalyserDlg::ComputeLADdistribution" (function that call 2)
+4. Added variable "BOOL is_division,int sx, int sy" to function CalculDirection4
+
+23/10/05
+1. Added function CTreeAnalyserDlg::GetGapFraction(CImage *ctrlImage,double px, double py, int gx, int gy) this function call by CalculDirection4
+2. Added function CEachImage::CalculSectionAreaRectangle allow using rectangle zoning
+3. Modified CalculDirection allow calculation for subdivision
+4. Modified inversion using equation 6 in the paper
+6. Combined EstimateLeafArea+CalculLAD1 to EstimateLeafArea
+5. finish calculation with sub division
+
+Version 1.20a
+28/11/05
+1. Debug estimation of leaf area found Manuel, cause by mistake in calculation subdivision_px and subdivision_py
+
+Version 1.20b
+3/12/05
+1. Include revised manual after Herve' and Andre'
+
+Version 1.20c
+5/12/05
+1. set maximum PZA to 500
+2. if PZA gap option is selected then enabled txt_pza
+
+11/1/06
+1. Delete function EstimateLeafAreaOld();
+
+12/1/06
+1. Display volume when calculate vertical profile of leaf area
+
+Version 1.20d
+30/1/06
+1. Add function void CTreeAnalyserDlg::ExportBeamToFile(CString ExportName, BOOL separate,bool model) 
+2. Allow exporting by Python code version 2.3 and 2.4
+3. Removed CTreeAnalyserDlg::ExportP0Beer(CString ExportName, BOOL separate)
+4. Removed CTreeAnalyserDlg::ExportP0Binom(CString ExportName, BOOL separate)
+5. Add display version history
+
+11/7/06
+1. enable input default value of PZA in Advanced options dialog
+
+
+
+Next work
+- programming
+	- display total equation
+	- reset parameter of pImagePool and VP if open new file.
+	- save output directory in the file
+	- combine function EstimateLeafArea and CalculLAD1
+	- add profile of plants  parameters with predefine plant (olive, walnut, mango, rubber)
+	- change leaf area to plant area
+	- if picture not found make the list to gray
+	- Change computation of camera distance in pixel according to equation A1.2
+	- when comparing canopy, check if output file is opened prevent error writing file
+	- in the process of leaf area estimation check if there are some voxels was missed by the beams. If yes, send warning message to user 
+	- output PZA to log file
+	- automatic gap fraction to 1/PZA
+	- Enable to change display font
+	
+	
+- Algorithms Development
+	- method to estimate clumping.
+	- method to estimate mean of leaf angle.
+	- Develop faster ray/box checking (see Amanatides and Woo, ref121)
+	
+bug found
+	- Error computing G for vertical direction
+	- memory leak during calculation of leaf area
+	- bug found when use vector of double in cVirtualPlant::CalculVerticalProfileLeafArea(void) with canopy file form TreeBox?
+	- incorrect display volume of bounding box
+	- program hang after calculate 2 plants
+	- In Advanced Dialog if PZA is selected text box must be enabled
+	- Problem open files if directory is in thai name
+	
+Software decoration
+	- check if vegestar file is open then pass
+	- add checking if output directory is existed
+	- add process to check where is starting point of the image and modify the calculation of unit vector
+	- move save and open canopy function to VirtualPlant
+	- do not send pointer of TA dialog to virtualPlant (using message communication instead)
+	- clear function CalculDirection(x)	
+	- remove unused function and classes
+	- add minimum/maximum focal length of each camera and check if user enter corrected value or not
+	
+
+Image processing to seperate plant and background
+1. change pixels that are sure to be non-vegetation pixel to white
+2. change pixels that are sure to be vegetation pixel to green
+3. using gradient consideration for remaining pixels
+
+
+
+Version 2.0 (early 2006=enhance of interface)
+1. Sizable dialog and controls
+2. Tools bar and status bar support
+3. picture zooming and pixel editing
+4. Binary file format
+5. Include image in the tre file (using compression)
+

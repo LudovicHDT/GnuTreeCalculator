@@ -1,0 +1,805 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+#ifdef _WIN32
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(874)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DLG_ADD_IMAGE DIALOGEX 0, 0, 293, 195
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Add Image to Project"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,163,169,50,17
+    PUSHBUTTON      "Cancel",IDCANCEL,229,169,50,17
+    LTEXT           "File name:",IDC_STATIC,7,8,35,10
+    EDITTEXT        IDC_EDIT_FNAME,42,7,202,12,ES_AUTOHSCROLL | WS_DISABLED
+    LTEXT           "Height (m)",IDC_STATIC,98,50,35,10
+    GROUPBOX        "Camera Location",IDC_STATIC,7,39,138,73
+    LTEXT           "Distance (m)",IDC_STATIC,13,50,42,10
+    LTEXT           "Elevation (up+)",IDC_STATIC,15,132,63,10
+    LTEXT           "Direction (deg. 0=East 90=North)",IDC_STATIC,14,81,126,
+                    10
+    EDITTEXT        IDC_EDIT_DISTANCE,13,60,38,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_HEIGHT,97,60,38,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DIRECTION,95,93,38,13,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    GROUPBOX        "Camera Orientation (degrees)",IDC_STATIC,7,115,138,73
+    LTEXT           "Bending (left+)",IDC_STATIC,17,167,63,10
+    LTEXT           "Rolling (clockwise)",IDC_STATIC,16,150,63,10
+    EDITTEXT        IDC_EDIT_INC,85,130,38,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_BENDING,86,166,38,13,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    EDITTEXT        IDC_EDIT_ROT,86,148,38,13,ES_AUTOHSCROLL | ES_NUMBER | 
+                    WS_DISABLED
+    GROUPBOX        "Camera Specification",IDC_STATIC,153,59,129,100
+    COMBOBOX        IDC_COMBO_CAMERA,161,70,115,84,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    LTEXT           "Focal length (mm)",IDC_STATIC,216,86,59,10
+    EDITTEXT        IDC_EDIT_FOCAL,216,95,42,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_PICH,240,42,30,13,ES_AUTOHSCROLL | WS_DISABLED
+    LTEXT           "x",IDC_STATIC,231,44,8,10
+    LTEXT           "Image size:",IDC_STATIC,154,43,38,10
+    EDITTEXT        IDC_EDIT_PICW,195,42,31,13,ES_AUTOHSCROLL | WS_DISABLED
+    LTEXT           "Calibration (mm)",IDC_STATIC,160,85,50,10
+    EDITTEXT        IDC_EDIT_CCDSIZE,161,95,38,13,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    LTEXT           "Picture name:",IDC_STATIC,7,24,44,10
+    EDITTEXT        IDC_EDIT_PICNAME,55,23,188,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse",IDC_btnBrowse,251,7,35,12
+    LTEXT           "View angle (deg)",IDC_STATIC,159,116,59,10
+    EDITTEXT        IDC_EDIT_VIEWANGLE,222,114,38,13,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    COMBOBOX        IDC_COMBO_DIRECTION,14,92,66,98,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    PUSHBUTTON      "Captrue",IDC_btnCapture,251,23,35,12,WS_DISABLED
+    PUSHBUTTON      "Add camera",ID_ADD_CAMERA,164,136,48,17
+    PUSHBUTTON      "Camera info",ID_VIEW_CAMERA_INFO,222,136,48,17
+END
+
+IDD_DLG_PROGRAM_SET DIALOGEX 0, 0, 318, 231
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Project Setting"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,254,189,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,254,209,50,14
+    LTEXT           "Output Location:",IDC_STATIC,5,10,55,10
+    EDITTEXT        IDC_EDIT_OUTPUT,63,7,207,15,ES_AUTOHSCROLL
+    LTEXT           "Voxel size",IDC_STATIC,14,35,35,11
+    EDITTEXT        IDC_EDIT_CELLSIZE_X,52,34,23,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_CELLSIZE_Y,85,34,23,13,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    EDITTEXT        IDC_EDIT_CELLSIZE_Z,119,34,22,13,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    LTEXT           "x",IDC_STATIC,77,36,8,8
+    LTEXT           "x",IDC_STATIC,111,36,8,8
+    CONTROL         "VegeSTAR",IDC_CHECK_BOX,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,231,52,52,10
+    CONTROL         "Log file",IDC_CHECK_VOLUMELOG,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,231,41,50,10
+    PUSHBUTTON      "&Default",IDC_BTN_DEFAULT,254,148,50,15
+    GROUPBOX        "Estimation of leaf area options",IDC_STATIC,7,55,214,
+                    170
+    GROUPBOX        "Leaf angle distribution",IDC_STATIC,16,124,194,77
+    EDITTEXT        IDC_MA,76,179,31,13,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    LTEXT           "deg",IDC_DEG,114,182,15,10,NOT WS_VISIBLE
+    CONTROL         "3D Spatial of LAD",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,231,85,75,10
+    CONTROL         "Hor. profile of LAD",IDC_CHECK2,"Button",
+                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,231,63,74,10
+    CONTROL         "Ver. profile of LAD",IDC_CHECK3,"Button",
+                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,231,74,74,10
+    GROUPBOX        "Output",IDC_STATIC,226,29,83,82
+    CONTROL         "Cube",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    166,35,40,11
+    COMBOBOX        IDC_COMBO_LDISTRIBUTION,45,140,99,93,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    CTEXT           "G = 0.5\ng = sin x",IDC_G_SPHERICAL,48,156,92,17
+    EDITTEXT        IDC_DISTRIBUTION_FILE,34,180,103,12,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    PUSHBUTTON      "Browse..",IDC_BROWSE,144,179,38,15
+    PUSHBUTTON      "&Advanced",IDC_BUTTON_ADVANCE,255,127,48,16
+    EDITTEXT        IDC_EDIT3,136,94,41,12,ES_AUTOHSCROLL
+    LTEXT           "Mean leaf area :",IDC_STATIC,135,79,56,11
+    LTEXT           "cm2",IDC_STATIC,182,96,20,13
+    GROUPBOX        "Inversion Method",IDC_STATIC,16,67,193,52
+    CONTROL         "Binomial Law",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,23,82,57,10
+    CONTROL         "Beer's Law",IDC_RADIO3,"Button",BS_AUTORADIOBUTTON,24,
+                    98,51,10
+    CONTROL         "Compute Vertical Profile",IDC_CHK_LAD,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,16,204,116,16
+    PUSHBUTTON      "&Browse",IDC_BUTTON1,273,7,38,15
+    LTEXT           "cm.",IDC_STATIC,145,35,18,9
+END
+
+IDD_PICTURE_COMBINATION DIALOG  0, 0, 186, 95
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Test picture combination"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,24,50,14
+    EDITTEXT        IDC_EDIT_NUM,70,5,30,12,ES_AUTOHSCROLL
+    LTEXT           "Number of picture:",IDC_STATIC,10,5,60,10
+END
+
+IDD_DLG_INPUT DIALOGEX 0, 0, 202, 53
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,145,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,145,24,50,14
+    LTEXT           "Input value:",IDC_Txt_Instruction,7,7,93,12
+    EDITTEXT        IDC_INPUT,7,21,93,16,ES_AUTOHSCROLL
+    LTEXT           "Unit",IDC_Txt_Unit,104,23,33,12
+END
+
+IDD_DLG_ADVANCE DIALOGEX 0, 0, 253, 281
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Advanced Options"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,195,58,50,14
+    GROUPBOX        "Estimation of tree dimension option",IDC_STATIC,7,7,144,
+                    33
+    LTEXT           "Limit elevation to :",IDC_STATIC,13,21,59,10
+    EDITTEXT        IDC_EDIT_ELE,77,20,25,13,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "degrees",IDC_STATIC,107,23,26,8
+    GROUPBOX        "Reconstruction volume options",IDC_STATIC,7,43,144,50
+    LTEXT           "Enlarge bounding box (%) :",IDC_STATIC,14,59,85,10
+    EDITTEXT        IDC_EDIT_ENLARGER,99,58,25,13,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Beam spacing :",IDC_STATIC,14,76,49,10
+    EDITTEXT        IDC_EDIT_RAYPX,64,74,24,13,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "X",IDC_STATIC,90,77,8,8
+    EDITTEXT        IDC_EDIT_RAYPY,98,74,22,13,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "pixel",IDC_STATIC,123,77,15,8
+    GROUPBOX        "Estimation of leaf area options",IDC_STATIC,7,100,240,
+                    177
+    CONTROL         "Set maximum LAD",IDC_CHK_SET_LAD,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,16,112,70,13
+    EDITTEXT        IDC_EDIT_MAXLAD,88,112,27,12,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    LTEXT           "m2/m3",IDC_STATIC,118,114,24,10
+    GROUPBOX        "Zero gap management",IDC_STATIC,15,130,110,68
+    CONTROL         "Automatic adjust",IDC_RADIO1,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,19,146,80,12
+    CONTROL         "Fixed to :",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,19,
+                    163,45,13
+    EDITTEXT        IDC_EDIT1,66,163,52,12,ES_AUTOHSCROLL
+    GROUPBOX        "Clumping options",IDC_STATIC,134,130,108,68
+    CONTROL         "Auto detect the clumping",IDC_RADIO_NOCLUMP,"Button",
+                    BS_AUTORADIOBUTTON | WS_DISABLED | WS_GROUP,141,141,92,
+                    10
+    CONTROL         "No clump (clumping=1)",IDC_RADIO_AUTOCLUMP,"Button",
+                    BS_AUTORADIOBUTTON | WS_DISABLED,141,157,92,10
+    CONTROL         "Custom",IDC_RADIO_CUSTOMCLUMP,"Button",
+                    BS_AUTORADIOBUTTON | WS_DISABLED,141,174,41,10
+    EDITTEXT        IDC_EDIT_CLUMP,185,171,38,12,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    GROUPBOX        "Picture zone area (PZA)  for gap fraction",IDC_STATIC,
+                    14,203,228,66
+    CONTROL         "Automatic selection",IDC_RADIO5,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,24,217,108,10
+    CONTROL         "Custom",IDC_RADIO6,"Button",BS_AUTORADIOBUTTON,24,234,
+                    39,10
+    CONTROL         "PZA",IDC_RADIO_PZA,"Button",BS_AUTORADIOBUTTON,24,252,
+                    25,10
+    EDITTEXT        IDC_EDIT_PZA,52,251,28,13,ES_AUTOHSCROLL | WS_DISABLED
+    EDITTEXT        IDC_EDIT_GPX,62,233,22,13,ES_AUTOHSCROLL | ES_NUMBER
+    CTEXT           "X",IDC_STATIC,86,236,8,8
+    EDITTEXT        IDC_EDIT_GPY,96,233,19,13,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "pixels",IDC_STATIC,120,234,19,8
+    PUSHBUTTON      "Cancel",IDCANCEL,195,79,50,14
+    PUSHBUTTON      "Default",IDC_BTN_DEFAULT,196,15,49,14
+    CONTROL         "Subdivision of PZA",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,154,218,72,10
+    EDITTEXT        IDC_EDIT4,195,246,24,11,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Column :",IDC_STATIC,163,232,29,8
+    LTEXT           "Row :",IDC_STATIC,173,247,20,8
+    EDITTEXT        IDC_EDIT6,195,232,24,11,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "Set default PZA",IDC_Btn_SetPZA,87,250,58,16
+END
+
+IDD_CAPTRUE_DLG DIALOGEX 0, 0, 292, 180
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,134,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,7,159,50,14
+    CONTROL         "",IDC_ImageFrame,"Static",SS_BLACKFRAME,66,7,192,135
+    PUSHBUTTON      "Captrue",IDC_CaptureBtn,7,58,50,14
+END
+
+IDD_DLG_COMPARE_CANOPY DIALOGEX 0, 0, 247, 95
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Compare two selected canopy"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,127,74,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,190,74,50,14
+    EDITTEXT        IDC_EDIT1,7,18,191,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse",IDC_BROWSE1,202,18,34,13
+    EDITTEXT        IDC_EDIT5,7,48,191,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "Browse",IDC_BROWSE2,202,48,34,13
+    LTEXT           "Canopy1",IDC_STATIC,7,7,54,11
+    LTEXT           "Canopy2",IDC_STATIC,7,37,54,11
+END
+
+IDD_DLG_EXPORT_BEAMS DIALOGEX 0, 0, 238, 145
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Export Beam Equations"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,61,122,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,133,121,50,14
+    GROUPBOX        "Model selection",IDC_STATIC,7,62,62,49
+    CONTROL         "Beer's",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,15,73,45,15
+    CONTROL         "Binomial",IDC_RADIO3,"Button",BS_AUTORADIOBUTTON,15,90,
+                    45,15
+    EDITTEXT        IDC_EDIT_FILENAME,42,41,149,12,ES_AUTOHSCROLL
+    LTEXT           "File name:",IDC_STATIC,7,43,34,11
+    EDITTEXT        IDC_EDIT_OUTPUT_DIRECTORY,7,18,185,12,ES_AUTOHSCROLL
+    LTEXT           "Output directory:",IDC_STATIC,7,7,76,11
+    PUSHBUTTON      "Browse",IDBROWSE,196,17,35,14
+    CONTROL         "One data file/image",IDC_ONE_FILE,"Button",
+                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,142,69,76,11
+    CONTROL         "Included Python code",IDC_CHECK_PYTHON_OUT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,142,91,89,11
+    GROUPBOX        "Python version",IDC_STATIC,72,63,62,49
+    CONTROL         "Python 2.3",IDC_PY_VERSION,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,77,77,52,10
+    CONTROL         "Python 2.4",IDC_RADIO7,"Button",BS_AUTORADIOBUTTON,77,
+                    93,52,10
+END
+
+IDD_DLG_ADD_CAMERA DIALOGEX 0, 0, 212, 179
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,35,158,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,122,158,50,14
+    LTEXT           "Model:",IDC_STATIC,7,8,25,9
+    LTEXT           "Calibration value:",IDC_STATIC,7,24,60,12
+    LTEXT           "Minimum focal length:",IDC_STATIC,7,40,71,12
+    LTEXT           "Maximum focal length:",IDC_STATIC,7,55,71,12
+    LTEXT           "Calibration date:",IDC_STATIC,7,69,55,12
+    LTEXT           "Owner:",IDC_STATIC,7,86,27,12
+    EDITTEXT        IDC_MODEL,31,6,174,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_CALIBRATION_VALUE,65,22,46,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MIN_FC,80,37,50,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_MAX_FC,80,53,50,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_DATE,63,68,66,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_OWNER,32,84,173,12,ES_AUTOHSCROLL
+    LTEXT           "Note:",IDC_STATIC,7,98,27,9
+    EDITTEXT        IDC_NOTE,7,106,198,47,ES_AUTOHSCROLL
+    LTEXT           "mm",IDC_STATIC,116,24,27,9
+    LTEXT           "mm",IDC_STATIC,132,39,27,9
+    LTEXT           "mm",IDC_STATIC,132,55,27,9
+END
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 262, 186
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Tree Analyser"
+FONT 8, "MS Sans Serif", 400, 0, 0xDE
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,7,61,20,20
+    LTEXT           "Tree Analyser Version 1.0",IDC_TXT_VERSION,34,62,140,8,
+                    SS_NOPREFIX
+    LTEXT           "Copyright (C) 2003",IDC_TXT_COPYRIGHT,33,72,119,8
+    DEFPUSHBUTTON   "OK",IDOK,187,122,56,18,WS_GROUP
+    LTEXT           "Jessada PHATTARALERPHONG",IDC_STATIC,21,115,108,8
+    CONTROL         172,IDC_PIAF_LOGO,"Static",SS_BITMAP,5,5,158,41
+    LTEXT           "Herve SINOQUET",IDC_STATIC,21,141,60,8
+    LTEXT           "sinoquet@clermont.inra.fr",IDC_MAIL_TO_SINOQUET,21,149,
+                    82,8
+    LTEXT           "agrjes@yahoo.com",IDC_MAIL_TO_JESSADA,21,125,62,8
+    LTEXT           "Update",IDC_TXT_UPDATE,7,86,168,8
+    LTEXT           "Authors:",IDC_STATIC,8,104,85,12
+    CONTROL         173,IDC_KU_LOGO,"Static",SS_BITMAP,176,7,79,73
+    LTEXT           "INRA U.M.R. PIAF",IDC_INRA_WEB,47,48,60,8
+    LTEXT           "Kasetsart University",IDC_KU_WEB,185,82,63,8
+    LTEXT           "Send comments or bug report:",IDC_STATIC,7,168,99,10
+    LTEXT           "agrjes@yahoo.com",IDC_MAIL_TO_TREEANALYSER,104,168,92,
+                    10
+END
+
+IDD_TREEANALYSER_DIALOG DIALOGEX 0, 0, 407, 266
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Tree Analyser"
+MENU IDR_MENU1
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_STATUS_BAR,5,245,385,15,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER | NOT WS_TABSTOP
+    CONTROL         "Tree1",IDC_TREE1,"SysTreeView32",TVS_SHOWSELALWAYS | 
+                    TVS_CHECKBOXES | WS_BORDER | WS_TABSTOP,5,5,97,113
+    EDITTEXT        IDC_EDIT_OUTPUT,149,153,230,90,ES_MULTILINE | 
+                    ES_AUTOHSCROLL | WS_VSCROLL | WS_HSCROLL | NOT 
+                    WS_TABSTOP
+    EDITTEXT        IDC_IMAGE_PROPERTIES,7,124,95,34,ES_MULTILINE | 
+                    WS_DISABLED
+    EDITTEXT        IDC_SETTING_PROPERTIES,7,185,95,44,ES_MULTILINE | 
+                    WS_DISABLED
+END
+
+IDD_DLG_CAPTURE DIALOGEX 0, 0, 282, 170
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Tree Analyser : Video Capture"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,132,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,7,149,50,14
+    PUSHBUTTON      "Capture",IDC_btnCapture,7,98,48,16
+    PUSHBUTTON      "Setting",IDC_BUTTON2,7,7,46,16
+    PUSHBUTTON      "WebCam",IDC_WEBCAM,7,40,46,15
+    EDITTEXT        IDC_EDIT1,69,18,198,136,ES_AUTOHSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_DLG_ADD_IMAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 286
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 188
+    END
+
+    IDD_DLG_PROGRAM_SET, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 311
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 225
+    END
+
+    IDD_PICTURE_COMBINATION, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_DLG_INPUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 195
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 46
+    END
+
+    IDD_DLG_ADVANCE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 277
+    END
+
+    IDD_CAPTRUE_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 285
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 173
+    END
+
+    IDD_DLG_COMPARE_CANOPY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 240
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_DLG_EXPORT_BEAMS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 231
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 137
+    END
+
+    IDD_DLG_ADD_CAMERA, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 205
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 172
+    END
+
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 255
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 179
+    END
+
+    IDD_TREEANALYSER_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 400
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 259
+    END
+
+    IDD_DLG_CAPTURE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 275
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 163
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_DLG_ADD_IMAGE DLGINIT
+BEGIN
+    IDC_COMBO_DIRECTION, 0x403, 5, 0
+0x6145, 0x7473, "\000" 
+    IDC_COMBO_DIRECTION, 0x403, 3, 0
+0x454e, "\000" 
+    IDC_COMBO_DIRECTION, 0x403, 6, 0
+0x6f4e, 0x7472, 0x0068, 
+    IDC_COMBO_DIRECTION, 0x403, 3, 0
+0x574e, "\000" 
+    IDC_COMBO_DIRECTION, 0x403, 5, 0
+0x6557, 0x7473, "\000" 
+    IDC_COMBO_DIRECTION, 0x403, 3, 0
+0x5753, "\000" 
+    IDC_COMBO_DIRECTION, 0x403, 6, 0
+0x6f53, 0x7475, 0x0068, 
+    IDC_COMBO_DIRECTION, 0x403, 3, 0
+0x4553, "\000" 
+    IDC_COMBO_DIRECTION, 0x403, 7, 0
+0x7543, 0x7473, 0x6d6f, "\000" 
+    0
+END
+
+IDD_DLG_PROGRAM_SET DLGINIT
+BEGIN
+    IDC_COMBO_LDISTRIBUTION, 0x403, 8, 0
+0x6f43, 0x696e, 0x6163, 0x006c, 
+    IDC_COMBO_LDISTRIBUTION, 0x403, 12, 0
+0x6c45, 0x696c, 0x7370, 0x696f, 0x6164, 0x006c, 
+    IDC_COMBO_LDISTRIBUTION, 0x403, 12, 0
+0x7245, 0x6365, 0x6f74, 0x6870, 0x6c69, 0x0065, 
+    IDC_COMBO_LDISTRIBUTION, 0x403, 13, 0
+0x7845, 0x7274, 0x6d65, 0x706f, 0x6968, 0x656c, "\000" 
+    IDC_COMBO_LDISTRIBUTION, 0x403, 12, 0
+0x6c50, 0x6761, 0x6f69, 0x6870, 0x6c69, 0x0065, 
+    IDC_COMBO_LDISTRIBUTION, 0x403, 11, 0
+0x6c50, 0x6e61, 0x706f, 0x6968, 0x656c, "\000" 
+    IDC_COMBO_LDISTRIBUTION, 0x403, 10, 0
+0x7053, 0x6568, 0x6972, 0x6163, 0x006c, 
+    IDC_COMBO_LDISTRIBUTION, 0x403, 7, 0
+0x7543, 0x7473, 0x6d6f, "\000" 
+    0
+END
+
+#endif    // Neutral resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral (Default) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
+#ifdef _WIN32
+LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
+#pragma code_page(874)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON2               ICON                    "res\\Tree Analyser icon2.ico"
+#endif    // Neutral (Default) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Thai resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_THA)
+#ifdef _WIN32
+LANGUAGE LANG_THAI, SUBLANG_DEFAULT
+#pragma code_page(874)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\Tree Analyser.ico"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\Tree Analyser.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU1 MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New Project",                ID_FILE_NEWPROJECT
+        MENUITEM "&Open Project",               ID_FILE_OPENPROJECT
+        MENUITEM "&Save",                       ID_FILE_SAVEPROJECT
+        MENUITEM "Save As....",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&1.",                         ID_FILE_1
+        MENUITEM "&2.",                         ID_FILE_2
+        MENUITEM "&3.",                         ID_FILE_3
+        MENUITEM "&4.",                         ID_FILE_4
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_FILE_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Center mark",                ID_VIEW_CENTERMARK, CHECKED
+        MENUITEM "&Border mark",                ID_VIEW_MARGINMARK, CHECKED
+        MENUITEM "Clear &Output",               ID_VIEW_CLEAROUTPUT
+    END
+    POPUP "&Image"
+    BEGIN
+        MENUITEM "&Add Image to Project",       ID_IMAGE_ADDIMAGETOPROJECT
+        MENUITEM SEPARATOR
+        MENUITEM "Register Image",              ID_IMAGE_REGISTERIMAGE
+        , GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "&Remove",                     ID_IMAGE_DELETE
+        MENUITEM "&Edit Properties",            ID_IMAGE_EDITPARAMETERS
+        MENUITEM SEPARATOR
+        MENUITEM "Mark All",                    ID_IMAGE_MARKALL
+        MENUITEM "Unmark All",                  ID_IMAGE_UNMARKALL
+        MENUITEM "Togle Mark",                  ID_IMAGE_TOGLEMARK
+        MENUITEM SEPARATOR
+        MENUITEM "&Save Pixel Value",           ID_IMAGE_SAVEPIXELVALUE
+        MENUITEM "&Color Counting",             ID_IMAGE_COLORCOUNTING
+        MENUITEM "&Fractal Analysis",           ID_IMAGE_FRACTALANALYSIS
+        MENUITEM "Whole image gapfraction",     ID_IMAGE_CALCUALTEGAPFRACTION
+
+    END
+    POPUP "&Calculation"
+    BEGIN
+        MENUITEM "Estimate &Dimension",         ID_PROJECT_ESTIMATETREEDIMENSION
+
+        MENUITEM "Reconstruct &Volume",         ID_PROJECT_VOLUME
+        MENUITEM "Estimate Leaf Area ",         ID_PROJECT_LA_TOTAL
+        MENUITEM "Do All Calculations",         ID_PROJECT_ANALYSEALL
+        , GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "Export equations for Python", ID_CALCULATION_EXPORTEQUATIONSFORPYTHON
+
+        MENUITEM SEPARATOR
+        MENUITEM "&Setting......",              ID_PROJECT_SETTING
+    END
+    POPUP "Ca&nopy"
+    BEGIN
+        MENUITEM "&Display Properties",         ID_CANOPY_DISPLAYPROPERTIES
+        MENUITEM "View by PlantGL 3D Viewer",   ID_CANOPY_VIEWBYPLANTGL3DVIEWER
+
+        MENUITEM SEPARATOR
+        MENUITEM "&Save Canopy",                ID_CANOPY_SAVECANOPY
+        MENUITEM "&Open Canopy",                ID_CANOPY_OPENCANOPY
+        MENUITEM SEPARATOR
+        MENUITEM "&Run RATP",                   ID_CANOPY_RUNRATP, GRAYED
+        MENUITEM "Random leaf in volume",       ID_CANOPY_RANDOMLEAFINVOLUME
+        MENUITEM SEPARATOR
+        MENUITEM "Decrease/Increase cell size", ID_CANOPY_DECREASE
+        MENUITEM SEPARATOR
+        MENUITEM "Compare Canopy",              ID_CANOPY_COMPARECANOPY
+        MENUITEM "VerticalProfile of volume",   ID_CANOPY_VERTICALPROFILEOFVOLUME
+
+        MENUITEM "Vertical profile of leaf area", 
+                                                ID_CANOPY_VERTICALPROFILEOFLEAFAREA
+
+        MENUITEM "Export VegeSTAR canopy",      ID_CANOPY_EXPORTVEGESTARCANOPY
+
+        MENUITEM "Export RATP voxels",          ID_CANOPY_EXPORTRATPVOXELS
+        MENUITEM "Export PlantGL file",         ID_CANOPY_EXPORTPLANTGLFILE
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "Tree Analyser user &manual",  ID_HELP_TREEANALYSERUSERMANUAL
+
+        MENUITEM "&About Tree Analyser",        ID_HELP_ABOUT
+        MENUITEM "Version &History",            ID_HELP_VERSIONHISTORY
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_PIAF                BITMAP                  "res\\piaf.bmp"
+IDB_KU                  BITMAP                  "res\\ku_color256_small.bmp"
+#endif    // Thai resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,1,8,0
+ PRODUCTVERSION 1,1,9,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "UMR. PIAF. INRA, France and Kasetsart University, Thailand."
+            VALUE "FileDescription", "Tree Analyser for Windows"
+            VALUE "FileVersion", "1.18"
+            VALUE "InternalName", "Tree Analyser"
+            VALUE "LegalCopyright", "Copyright (C) 2003"
+            VALUE "OriginalFilename", "Tree Analyser.EXE"
+            VALUE "ProductName", "Tree Analyser Application"
+            VALUE "ProductVersion", "1.20d"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About Tree Analyser..."
+    IDS_LAST_UPDATE         "Update: 11 Jul 2006"
+    IDS_VERSION             "Tree Analyser version 1.20d"
+    IDS_COPYRIGHT           "Copyright (C) 2003-2005"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\Tree Analyser.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,529 @@
+
+/*
+void CTreeAnalyserDlg::CalculDirections3(CEachImage *image,int gx,int gy)
+{ //for only non-intercepted beam
+	vctDirection.clear();
+	//ms.Format("Calcualting intercepted directions of '%s'",image->GetPictureName());
+	//DisplayStatus(ms);
+	//ms.Format("Reading image '%s'",image->GetPictureName());
+	//DisplayStatus(ms);
+
+    // Load the selected bitmap file
+    HBITMAP hBitmap = (HBITMAP) ::LoadImage(AfxGetInstanceHandle(),
+         image->GetFileName(), IMAGE_BITMAP, 0, 0, 
+         LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+
+    // Do we have a valid handle for the loaded image?
+    if (hBitmap)
+    {
+		DisplayStatus("Loading Image....");
+        // Delete the current bitmap
+        if (m_bmpBitmap.DeleteObject())
+        // If there was a bitmap, detach it
+		m_bmpBitmap.Detach();
+        // Attach the currently loaded bitmap to the bitmap object
+        m_bmpBitmap.Attach(hBitmap);
+
+		BITMAP bm; //create handle for bitmap
+		// Get the loaded bitmap
+		CPaintDC dc(this);
+		CDC m_bmpCDC;
+		m_bmpCDC.CreateCompatibleDC(&dc);
+		m_bmpCDC.SelectObject(m_bmpBitmap);
+		m_bmpBitmap.GetBitmap(&bm);
+
+//--------- Start calculate number of direction (only intercepted directions) -----------------------------------
+		vctDirection.clear(); //delete all previous directions
+		CDirection tempdir;
+		int nx=0,ny=0;
+		if (mod(bm.bmWidth,pImagePool1->lapx)==0)
+		{
+			nx=bm.bmWidth/pImagePool1->lapx;
+		}
+		else {nx=(bm.bmWidth/pImagePool1->lapx)+1;}
+
+		if (mod(bm.bmHeight,pImagePool1->lapy)==0)
+		{
+			ny=bm.bmHeight/pImagePool1->lapy;
+		}
+		else {ny=(bm.bmHeight/pImagePool1->lapy)+1;}
+
+		int totalfound=0;
+		int i,j,k,l;
+		int opercent=-1;
+		double unitpercent=double(nx)/100;
+		for (i=1;i<=nx;i++)
+		{
+			int percent=int(i/unitpercent);
+			if(percent>opercent)
+			{
+				//ms.Format("Analysing intercepted directions on image '%s'  %i%%",image->GetPictureName(),percent);
+				//DisplayStatus(ms);
+				//opercent=percent;
+			}
+
+			for (j=1;j<=ny;j++)
+			{
+				int blackfound=0;
+				k=1;
+				while (k<=pImagePool1->lapx && blackfound==0)
+				{	
+					l=1;
+					while(l<=pImagePool1->lapy && blackfound==0)
+					{
+						if(m_bmpCDC.GetPixel((i-1)*pImagePool1->lapx+k,(j-1)*pImagePool1->lapy+l)==0) //black pixel found
+						{
+							blackfound=1;
+
+							//find the middle pixel
+							double px=(i-1)*pImagePool1->lapx+(double(pImagePool1->lapx)/2.0)+0.5;
+							double py=(j-1)*pImagePool1->lapy+(double(pImagePool1->lapy)/2.0)+0.5;
+							tempdir.unitDirection=image->CalculUnitDirection(px,py);
+							tempdir.px=px;
+							tempdir.py=py;
+							//tempdir.unitDirection=image->CalculUnitDirection(320,240);
+
+							//calculate current direction
+							vctDirection.push_back(tempdir);
+							
+							//cPoint testpoint=vctDirection[0].unitDirection;
+							//double test=testpoint.GetX();
+
+						}
+						l++;
+
+					} //while(l<=pImagePool1->raypy && blackfound=0)
+					k++;
+				} //while (k<=pImagePool1->raypx && blackfound=0)
+				if (blackfound==1) //add direction to vctDirection
+				{
+					totalfound++;
+				}
+			} //for (j=1;j<=ny;j++)
+		} //for (i=1;i<=nx;i++)
+//--------- End calculate number of direction (only intercepted directions) ----------------------------------------
+//After here we have total of intersected direction but no gap fraction.
+		int nogap=0;
+		if(pImagePool1->gap_average_option==0) // for fixed zone
+		{
+			//calculate number of direction
+			int nx=0,ny=0;
+			if (mod(bm.bmWidth,gx)==0)
+			{
+				nx=bm.bmWidth/gx;
+			}
+			else {nx=(bm.bmWidth/gx)+1;}
+
+			if (mod(bm.bmHeight,gy)==0)
+			{
+				ny=bm.bmHeight/gy;
+			}
+			else {ny=(bm.bmHeight/gy)+1;}
+
+			std::vector<double> gap_zone;
+			//gap_zone.resize(0);
+			//calculate gapfraction for each zone
+			for(int ix=0;ix<nx;ix++)
+			{
+				for(int iy=0;iy<ny;iy++)
+				{
+					int blackfound=0;
+					
+					for(int j=gx*ix;j<(gx*ix)+gx;j++)
+					{
+						for(int k=gy*iy;k<(gy*iy)+gy;k++)
+						{
+							if(m_bmpCDC.GetPixel(j,k)==0)
+							{
+								blackfound++;
+							}
+						}
+					}
+					
+					double gap=1-(double(blackfound)/(gx*gy));
+					if (gap<=0){nogap++;} //count number of nogap
+					gap_zone.push_back(gap);
+				}//for(int iy=0;iy<ny;iy++)
+			}//for(int ix=0;i<nx;ix++)
+
+			//calculate gapfraction for each direction
+			int total_direction=vctDirection.size();
+			for (i=0;i<total_direction;i++)
+			{
+				//calculate position of zone
+				double px=vctDirection[i].px;
+				double py=vctDirection[i].py;
+				int zonex=0,zoney=0;
+				if(mod(px,gx)==0){zonex=int(px/gx);} else{zonex=int(px/gx)+1;}
+				if(mod(py,gy)==0){zoney=int(py/gy);} else{zoney=int(py/gy)+1;}
+
+				//find value of gap
+				int index=(zonex-1)*ny+zoney;
+				//double a=gap_zone[index];
+				vctDirection[i].gapfraction=gap_zone[index];		
+			}
+		/*
+		CString filename = "g:\\ta\\gap.out";
+		FILE * pFile;
+		pFile=fopen(filename,"wt");
+		for(int i=1;i<vctDirection.size();i++)
+		{
+			fprintf(pFile,"%i\t%6.4f\t%6.4f\t%6.4f\n",i,vctDirection[i].gapfraction,vctDirection[i].px,vctDirection[i].py);
+		}
+		fclose(pFile);
+		*/
+/*
+		}
+		else //for gliding zone
+		{
+			//ms.Format("		Total direction=%i (x=%i y=%i)  Intercepted found=%i",nx*ny,nx,ny,totalfound);
+			//AddDisplayText(ms);	
+
+			//compute gap fraction for each direction
+			opercent=-1;
+			unitpercent=vctDirection.size()/100;
+			int total_direction=vctDirection.size();
+			for(i=0;i<total_direction;i++)
+			{
+				int percent=int(i/unitpercent);
+				if(percent>opercent)
+				{
+					ms.Format("Analysing gap fraction on image '%s'  %i%%",image->GetPictureName(),percent);
+					DisplayStatus(ms);
+					opercent=percent;
+				}
+
+				int pxmin=0,pxmax=0,pymin=0,pymax=0; //initialize inital variable limited zone for gap 
+				
+				
+				pxmin=int(vctDirection[i].px/pImagePool1->gpx)*pImagePool1->gpx;
+				pxmax=pxmin+pImagePool1->gpx;
+				pymin=int(vctDirection[i].py/pImagePool1->gpy)*pImagePool1->gpy;
+				pymax=pymin+pImagePool1->gpy;
+				
+
+				if(pxmin<0){pxmin=0;}
+				if(pymin<0){pxmin=0;}
+
+				int black_count=0;
+				for(j=pxmin;j<pxmax;j++)
+				{
+					for(k=pymin;k<pymax;k++)
+					{
+						if(m_bmpCDC.GetPixel(j,k)==0)
+						{
+							black_count++;
+						}
+					}//for(k=pymin;k<=pymax;k++)
+				}//for(j=pxmin;j<=pxmax;j++)
+				double gap=1-(double(black_count)/double((pxmax-pxmin)*(pymax-pymin)));
+				if (gap<=0){nogap++;} //count number of nogap
+				vctDirection[i].gapfraction=gap;
+			} //for(i=1;i<vctDirection.size();i++)
+
+		} 
+	//****************finish gliding zone ****************************************
+
+
+		//calcualte minimumGap
+		int total_dir=vctDirection.size();
+		double pixel_per_gap=gx*gy;
+		double minimumGapCal=0;
+		if(pImagePool1->ZeroGapManage==0){minimumGapCal=1-((pixel_per_gap)-1+(double(nogap)/total_dir))/pixel_per_gap;}
+		//int a=1;
+		for (i=0;i<total_dir;i++)
+		{
+			if(vctDirection[i].gapfraction<=0)
+			{
+				if(pImagePool1->ZeroGapManage==0){vctDirection[i].gapfraction=minimumGapCal;}
+				else{vctDirection[i].gapfraction=pImagePool1->minimumGap;}
+			}
+		}
+
+		if(pImagePool1->ZeroGapManage==0){ms.Format("Intersected found=%i  Zero gap found=%i (%6.2f%%)  Set zero gap=%8.6f",total_dir,nogap,(nogap*100.0)/vctDirection.size(),minimumGapCal);}
+		else {ms.Format("Intersected found=%i  Zero gap found=%i (%6.2f%%)  Set zero gap=%8.6f",total_dir,nogap,(nogap*100.0)/vctDirection.size(),pImagePool1->minimumGap);}
+		this->AddDisplayText(ms);
+
+//End calculation the gapfraction for each direction---------------------------------------
+
+		/*
+		CString filename = "g:\\ta\\gap.out";
+		FILE * pFile;
+		pFile=fopen(filename,"wt");
+		for(int i=1;i<vctDirection.size();i++)
+		{
+			fprintf(pFile,"%i\t%6.4f\n",i,vctDirection[i].gapfraction);
+		}
+		fclose(pFile);
+		*/
+/*
+
+     } //if (hBitmap)
+	 else {MessageBox("Reading file error!\nSelected file may not be bitmap file.");}
+}//CalculDirections3(CEachImage *image,int gx,int gy)
+*/
+
+
+
+
+void CTreeAnalyserDlg::CalculDirections(CEachImage *image,int gx,int gy)
+{ //for only intercepted beam
+	vctDirection.clear();
+	//ms.Format("Calcualting intercepted directions of '%s'",image->GetPictureName());
+	//DisplayStatus(ms);
+	//ms.Format("Reading image '%s'",image->GetPictureName());
+	//DisplayStatus(ms);
+
+    // Load the selected bitmap file
+    HBITMAP hBitmap = (HBITMAP) ::LoadImage(AfxGetInstanceHandle(),
+         image->GetFileName(), IMAGE_BITMAP, 0, 0, 
+         LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+
+    // Do we have a valid handle for the loaded image?
+    if (hBitmap)
+    {
+		DisplayStatus("Loading Image....");
+        // Delete the current bitmap
+        if (m_bmpBitmap.DeleteObject())
+        // If there was a bitmap, detach it
+		m_bmpBitmap.Detach();
+        // Attach the currently loaded bitmap to the bitmap object
+        m_bmpBitmap.Attach(hBitmap);
+
+		BITMAP bm; //create handle for bitmap
+		// Get the loaded bitmap
+		CPaintDC dc(this);
+		CDC m_bmpCDC;
+		m_bmpCDC.CreateCompatibleDC(&dc);
+		m_bmpCDC.SelectObject(m_bmpBitmap);
+		m_bmpBitmap.GetBitmap(&bm);
+
+//--------- Start calculate number of direction (only intercepted directions) -----------------------------------
+		vctDirection.clear(); //delete all previous directions
+		CDirection tempdir;
+		int nx=0,ny=0;
+		if (mod(bm.bmWidth,pImagePool1->lapx)==0)
+		{
+			nx=bm.bmWidth/pImagePool1->lapx;
+		}
+		else {nx=(bm.bmWidth/pImagePool1->lapx)+1;}
+
+		if (mod(bm.bmHeight,pImagePool1->lapy)==0)
+		{
+			ny=bm.bmHeight/pImagePool1->lapy;
+		}
+		else {ny=(bm.bmHeight/pImagePool1->lapy)+1;}
+
+		int totalfound=0;
+		int i,j,k,l;
+		int opercent=-1;
+		double unitpercent=double(nx)/100;
+		for (i=1;i<=nx;i++)
+		{
+			int percent=int(i/unitpercent);
+			if(percent>opercent)
+			{
+				ms.Format("Analysing intercepted directions on image '%s'  %i%%",image->GetPictureName(),percent);
+				DisplayStatus(ms);
+				opercent=percent;
+			}
+
+			for (j=1;j<=ny;j++)
+			{
+				int blackfound=0;
+				k=1;
+				while (k<=pImagePool1->lapx && blackfound==0)
+				{	
+					l=1;
+					while(l<=pImagePool1->lapy && blackfound==0)
+					{
+						if(m_bmpCDC.GetPixel((i-1)*pImagePool1->lapx+k,(j-1)*pImagePool1->lapy+l)==0) //black pixel found
+						{
+							blackfound=1;
+
+							//find the middle pixel
+							double px=(i-1)*pImagePool1->lapx+(double(pImagePool1->lapx)/2.0)+0.5;
+							double py=(j-1)*pImagePool1->lapy+(double(pImagePool1->lapy)/2.0)+0.5;
+							tempdir.unitDirection=image->CalculUnitDirection(px,py);
+							tempdir.px=px;
+							tempdir.py=py;
+							//tempdir.unitDirection=image->CalculUnitDirection(320,240);
+
+							//calculate current direction
+							vctDirection.push_back(tempdir);
+							
+							//cPoint testpoint=vctDirection[0].unitDirection;
+							//double test=testpoint.GetX();
+
+						}
+						l++;
+
+					} //while(l<=pImagePool1->raypy && blackfound=0)
+					k++;
+				} //while (k<=pImagePool1->raypx && blackfound=0)
+				if (blackfound==1) //add direction to vctDirection
+				{
+					totalfound++;
+				}
+			} //for (j=1;j<=ny;j++)
+		} //for (i=1;i<=nx;i++)
+//--------- End calculate number of direction (only intercepted directions) ----------------------------------------
+//After here we have total of intersected direction but no gap fraction.
+		int nogap=0;
+		if(pImagePool1->gap_average_option==0) // for fixed zone
+		{
+			//calculate number of direction
+			int nx=0,ny=0;
+			if (mod(bm.bmWidth,gx)==0)
+			{
+				nx=bm.bmWidth/gx;
+			}
+			else {nx=(bm.bmWidth/gx)+1;}
+
+			if (mod(bm.bmHeight,gy)==0)
+			{
+				ny=bm.bmHeight/gy;
+			}
+			else {ny=(bm.bmHeight/gy)+1;}
+
+			std::vector<double> gap_zone;
+			//gap_zone.resize(0);
+			//calculate gapfraction for each zone
+			for(int ix=0;ix<nx;ix++)
+			{
+				for(int iy=0;iy<ny;iy++)
+				{
+					int blackfound=0;
+					
+					for(int j=gx*ix;j<(gx*ix)+gx;j++)
+					{
+						for(int k=gy*iy;k<(gy*iy)+gy;k++)
+						{
+							if(m_bmpCDC.GetPixel(j,k)==0)
+							{
+								blackfound++;
+							}
+						}
+					}
+					
+					double gap=1-(double(blackfound)/(gx*gy));
+					if (gap<=0){nogap++;} //count number of nogap
+					gap_zone.push_back(gap);
+				}//for(int iy=0;iy<ny;iy++)
+			}//for(int ix=0;i<nx;ix++)
+
+			//calculate gapfraction for each direction
+			int total_direction=vctDirection.size();
+			for (i=0;i<total_direction;i++)
+			{
+				//calculate position of zone
+				double px=vctDirection[i].px;
+				double py=vctDirection[i].py;
+				int zonex=0,zoney=0;
+				if(mod(px,gx)==0){zonex=int(px/gx);} else{zonex=int(px/gx)+1;}
+				if(mod(py,gy)==0){zoney=int(py/gy);} else{zoney=int(py/gy)+1;}
+
+				//find value of gap
+				int index=(zonex-1)*ny+zoney;
+				//double a=gap_zone[index];
+				vctDirection[i].gapfraction=gap_zone[index];		
+			}
+		/*
+		CString filename = "g:\\ta\\gap.out";
+		FILE * pFile;
+		pFile=fopen(filename,"wt");
+		for(int i=1;i<vctDirection.size();i++)
+		{
+			fprintf(pFile,"%i\t%6.4f\t%6.4f\t%6.4f\n",i,vctDirection[i].gapfraction,vctDirection[i].px,vctDirection[i].py);
+		}
+		fclose(pFile);
+		*/
+
+		}
+		else //for gliding zone
+		{
+			//ms.Format("		Total direction=%i (x=%i y=%i)  Intercepted found=%i",nx*ny,nx,ny,totalfound);
+			//AddDisplayText(ms);	
+
+			//compute gap fraction for each direction
+			opercent=-1;
+			unitpercent=vctDirection.size()/100;
+			int total_direction=vctDirection.size();
+			for(i=0;i<total_direction;i++)
+			{
+				int percent=int(i/unitpercent);
+				if(percent>opercent)
+				{
+					ms.Format("Analysing gap fraction on image '%s'  %i%%",image->GetPictureName(),percent);
+					DisplayStatus(ms);
+					opercent=percent;
+				}
+
+				int pxmin=0,pxmax=0,pymin=0,pymax=0; //initialize inital variable limited zone for gap 
+				
+				
+				pxmin=int(vctDirection[i].px/pImagePool1->gpx)*pImagePool1->gpx;
+				pxmax=pxmin+pImagePool1->gpx;
+				pymin=int(vctDirection[i].py/pImagePool1->gpy)*pImagePool1->gpy;
+				pymax=pymin+pImagePool1->gpy;
+				
+
+				if(pxmin<0){pxmin=0;}
+				if(pymin<0){pxmin=0;}
+
+				int black_count=0;
+				for(j=pxmin;j<pxmax;j++)
+				{
+					for(k=pymin;k<pymax;k++)
+					{
+						if(m_bmpCDC.GetPixel(j,k)==0)
+						{
+							black_count++;
+						}
+					}//for(k=pymin;k<=pymax;k++)
+				}//for(j=pxmin;j<=pxmax;j++)
+				double gap=1-(double(black_count)/double((pxmax-pxmin)*(pymax-pymin)));
+				if (gap<=0){nogap++;} //count number of nogap
+				vctDirection[i].gapfraction=gap;
+			} //for(i=1;i<vctDirection.size();i++)
+
+		} 
+	//****************finish gliding zone ****************************************
+
+
+		//calcualte minimumGap
+		int total_dir=vctDirection.size();
+		double pixel_per_gap=gx*gy;
+		double minimumGapCal=0;
+		if(pImagePool1->ZeroGapManage==0){minimumGapCal=1-((pixel_per_gap)-1+(double(nogap)/total_dir))/pixel_per_gap;}
+		//int a=1;
+		for (i=0;i<total_dir;i++)
+		{
+			if(vctDirection[i].gapfraction<=0)
+			{
+				if(pImagePool1->ZeroGapManage==0){vctDirection[i].gapfraction=minimumGapCal;}
+				else{vctDirection[i].gapfraction=pImagePool1->minimumGap;}
+			}
+		}
+
+		if(pImagePool1->ZeroGapManage==0){ms.Format("Intersected found=%i  Zero gap found=%i (%6.2f%%)  Set zero gap=%8.6f",total_dir,nogap,(nogap*100.0)/vctDirection.size(),minimumGapCal);}
+		else {ms.Format("Intersected found=%i  Zero gap found=%i (%6.2f%%)  Set zero gap=%8.6f",total_dir,nogap,(nogap*100.0)/vctDirection.size(),pImagePool1->minimumGap);}
+		this->AddDisplayText(ms);
+
+//End calculation the gapfraction for each direction---------------------------------------
+
+		/*
+		CString filename = "g:\\ta\\gap.out";
+		FILE * pFile;
+		pFile=fopen(filename,"wt");
+		for(int i=1;i<vctDirection.size();i++)
+		{
+			fprintf(pFile,"%i\t%6.4f\n",i,vctDirection[i].gapfraction);
+		}
+		fclose(pFile);
+		*/
+
+
+     } //if (hBitmap)
+	 else {MessageBox("Reading file error!\nSelected file may not be bitmap file.");}
+}

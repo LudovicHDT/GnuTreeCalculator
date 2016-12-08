@@ -1,0 +1,19 @@
+Tree Analyser version history.
+
+1.20 First Public Released Version
+
+1.20a
+- Debug estimation of leaf area found by Manuel Avila Henarejos, cause by mistake in calculation subdivision_px and subdivision_py
+
+1.20b
+- Included revised manual.
+
+1.20c 3-Dec-2005
+1. set maximum PZA to 500
+2. Deleted some unused internal functions
+
+1.20d
+1. Enabled export beam equation for Python either Python 2.3 or 2.4
+2. Display volume when calculate vertical profile of leaf area.
+3. Add version Hisotry
+4. Enable input default value of PZA in Advanced options dialog.
