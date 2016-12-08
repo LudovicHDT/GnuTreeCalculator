@@ -1,0 +1,8 @@
+Picture name=olive ele0 dir240 dis4.6 H1.5 fc9
+Bitmap source=D:\PhD\Paper #1 Volume reconstruction of trees\Images\Olive1\olive ele0 dir240 dis4.6 H1.5 fc9.bmp
+Image height=480  width=640  image type=1 bit
+bBits=21599664
+Color found = 2
+RGB	SumPixel R	G	B
+16777215	290989	255	255	255
+0	16211	0	0	0
