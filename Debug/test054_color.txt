@@ -1,0 +1,8 @@
+Picture name=test054
+Bitmap source=D:\PhD\Paper #1 Volume reconstruction of trees\Images\Walnut\test054.bmp
+Image height=480  width=640  image type=1 bit
+bBits=22582704
+Color found = 2
+RGB	SumPixel R	G	B
+16777215	281307	255	255	255
+0	25893	0	0	0
